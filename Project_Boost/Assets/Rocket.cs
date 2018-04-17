@@ -14,8 +14,16 @@ public class Rocket : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if (Input.GetKey(KeyCode.Space))
-            print ("Space pressed");
-        //TODO: Add keys for rotation. They should be usable with space but not together.
+        ProcessInput();
 	}
+
+    //Process users input
+    private void ProcessInput()
+    {
+        if (Input.GetKey(KeyCode.Space))
+        {
+            print("Space pressed");
+        }
+        //TODO: Add keys for rotation. They should be usable with space but not together.
+    }
 }
