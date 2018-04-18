@@ -6,24 +6,49 @@ public class Rocket : MonoBehaviour
 {
 
 	// Use this for initialization
-	void Start ()
+	void Start()
     {
 		
 	}
 	
 	// Update is called once per frame
-	void Update ()
+	void Update()
     {
         ProcessInput();
 	}
 
-    //Process users input
+    // Process users input
     private void ProcessInput()
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            print("Space pressed");
+                Thrust();
         }
-        //TODO: Add keys for rotation. They should be usable with space but not together.
+        if (Input.GetKey("a"))
+        {
+            RotatePort();
+        }
+        else if (Input.GetKey("d"))
+        {
+            RotateStarboard();
+        }
+    }
+
+    // Thrust the rocket
+    private void Thrust()
+    {
+        print("Space pressed");
+    }
+
+    // Rotate counter clockwise
+    private void RotatePort()
+    {
+        print("A pressed");
+    }
+
+    // Rotate clockwise
+    private void RotateStarboard()
+    {
+        print("D pressed");
     }
 }
