@@ -5,7 +5,9 @@ public class Rocket : MonoBehaviour
 {
     // Variables
     [SerializeField] float rcsThrust = 150f;
-    [SerializeField] float mainThrust = 15f;
+    [SerializeField] float mainThrust = 100f;
+    enum State { Alive, Dead, Transcend };
+    State state = State.Alive;
     
     // Components
     Rigidbody rigidBody;
@@ -21,28 +23,37 @@ public class Rocket : MonoBehaviour
 	// Update is called once per frame
 	void Update()
     {
-        Thrust();
         ThrustAudio();
-        Rotate();
+        if (state == State.Alive)
+        {
+            Thrust();
+            Rotate();
+        }
     }
 
     // Detect collision
     void OnCollisionEnter(Collision collision)
     {
+        if (state != State.Alive)
+        {
+            return;
+        }
         switch (collision.gameObject.tag)
         {
             case ("Respawn"):
                 //
                 break;
             case ("Finish"):
-                SceneManager.LoadScene(1);
+                state = State.Transcend;
+                Invoke("LoadNextLevel", 1f);
                 break;
             default:
-                print("Dead");
-                SceneManager.LoadScene(0);
+                state = State.Dead;
+                Invoke("LoadStartLevel", 1f);
                 break;
         }
     }
+
 
     // Thrust the rocket
     private void Thrust()
@@ -57,7 +68,7 @@ public class Rocket : MonoBehaviour
     // Play Thrust SFX
     private void ThrustAudio()
     {
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKeyUp(KeyCode.Space) || state != State.Alive)
         {
             audioSource.Stop();
         }
@@ -81,5 +92,17 @@ public class Rocket : MonoBehaviour
             transform.Rotate(-Vector3.forward * rotationSpeed);
         }
         rigidBody.freezeRotation = false;
+    }
+
+    // Load Level 1
+    private void LoadStartLevel()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    // Load Level 2
+    private void LoadNextLevel()
+    {
+        SceneManager.LoadScene(1);
     }
 }
