@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 23894863699783268}
   m_Layer: 0
   m_Name: LandingPad_Top
-  m_TagString: Friendly
+  m_TagString: Finish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -56,8 +56,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4166232001900522}
   m_Layer: 0
-  m_Name: Level1_LandingPad
-  m_TagString: Untagged
+  m_Name: LandingPad
+  m_TagString: Finish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
