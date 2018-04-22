@@ -19,43 +19,18 @@ public class Rocket : MonoBehaviour
 	// Update is called once per frame
 	void Update()
     {
-        ProcessInput();
-	}
-
-    // Process users input
-    private void ProcessInput()
-    {
+        Thrust();
         ThrustAudio();
-        if (Input.GetKey(KeyCode.Space))
-        {
-            Thrust();
-        }
-        if (Input.GetKey("a"))
-        {
-            RotatePort();
-        }
-        else if (Input.GetKey("d"))
-        {
-            RotateStarboard();
-        }
+        Rotate();
     }
 
     // Thrust the rocket
     private void Thrust()
     {
-        rigidBody.AddRelativeForce(Vector3.up);
-    }
-
-    // Rotate counter clockwise
-    private void RotatePort()
-    {
-        transform.Rotate(Vector3.forward);
-    }
-
-    // Rotate clockwise
-    private void RotateStarboard()
-    {
-        transform.Rotate(-Vector3.forward);
+        if (Input.GetKey(KeyCode.Space))
+        {
+            rigidBody.AddRelativeForce(Vector3.up);
+        }
     }
 
     // Play Thrust SFX
@@ -69,5 +44,20 @@ public class Rocket : MonoBehaviour
         {
             audioSource.Play();
         }
+    }
+
+    // Rotate rocket
+    private void Rotate()
+    {
+        rigidBody.freezeRotation = true;
+        if (Input.GetKey("a"))
+        {
+            transform.Rotate(Vector3.forward);
+        }
+        else if (Input.GetKey("d"))
+        {
+            transform.Rotate(-Vector3.forward);
+        }
+        rigidBody.freezeRotation = false;
     }
 }
