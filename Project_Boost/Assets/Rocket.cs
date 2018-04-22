@@ -6,7 +6,7 @@ using UnityEngine;
 public class Rocket : MonoBehaviour
 {
     // Variables
-    [SerializeField] float rcsThrust = 200f;
+    [SerializeField] float rcsThrust = 150f;
     [SerializeField] float mainThrust = 15f;
     
     // Components
@@ -26,6 +26,20 @@ public class Rocket : MonoBehaviour
         Thrust();
         ThrustAudio();
         Rotate();
+    }
+
+    // Detect collision
+    void OnCollisionEnter(Collision collision)
+    {
+        switch (collision.gameObject.tag)
+        {
+            case ("Friendly"):
+                print("Safe");
+                break;
+            default:
+                print("Dead");
+                break;
+        }
     }
 
     // Thrust the rocket
