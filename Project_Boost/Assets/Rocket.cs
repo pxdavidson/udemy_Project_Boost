@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class Rocket : MonoBehaviour
 {
+    // Variables
+    [SerializeField] float rcsThrust = 200f;
+    [SerializeField] float mainThrust = 15f;
+    
     // Components
     Rigidbody rigidBody;
     AudioSource audioSource;
@@ -27,9 +31,10 @@ public class Rocket : MonoBehaviour
     // Thrust the rocket
     private void Thrust()
     {
+        float thrustSpeed = (mainThrust);
         if (Input.GetKey(KeyCode.Space))
         {
-            rigidBody.AddRelativeForce(Vector3.up);
+            rigidBody.AddRelativeForce(Vector3.up * thrustSpeed);
         }
     }
 
@@ -49,14 +54,15 @@ public class Rocket : MonoBehaviour
     // Rotate rocket
     private void Rotate()
     {
+        float rotationSpeed = (rcsThrust * Time.deltaTime);
         rigidBody.freezeRotation = true;
         if (Input.GetKey("a"))
         {
-            transform.Rotate(Vector3.forward);
+            transform.Rotate(Vector3.forward * rotationSpeed);
         }
         else if (Input.GetKey("d"))
         {
-            transform.Rotate(-Vector3.forward);
+            transform.Rotate(-Vector3.forward * rotationSpeed);
         }
         rigidBody.freezeRotation = false;
     }
