@@ -1,11 +1,14 @@
-﻿using UnityEngine.SceneManagement;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Rocket : MonoBehaviour
 {
     // Variables
     [SerializeField] float rcsThrust = 150f;
     [SerializeField] float mainThrust = 100f;
+    [SerializeField] AudioClip thrustSFX;
+    [SerializeField] AudioClip crashSFX;
+    [SerializeField] AudioClip levelUp;
     enum State { Alive, Dead, Transcend };
     State state = State.Alive;
     
@@ -23,11 +26,10 @@ public class Rocket : MonoBehaviour
 	// Update is called once per frame
 	void Update()
     {
-        ThrustAudio();
         if (state == State.Alive)
         {
-            Thrust();
-            Rotate();
+            ThrustRocket();
+            RotateRocket();
         }
     }
 
@@ -44,42 +46,34 @@ public class Rocket : MonoBehaviour
                 //
                 break;
             case ("Finish"):
-                state = State.Transcend;
-                Invoke("LoadNextLevel", 1f);
+                LevelUp();
                 break;
             default:
-                state = State.Dead;
-                Invoke("LoadStartLevel", 1f);
+                CrashRocket();
                 break;
         }
     }
 
-
     // Thrust the rocket
-    private void Thrust()
+    private void ThrustRocket()
     {
         float thrustSpeed = (mainThrust);
         if (Input.GetKey(KeyCode.Space))
         {
             rigidBody.AddRelativeForce(Vector3.up * thrustSpeed);
         }
-    }
-
-    // Play Thrust SFX
-    private void ThrustAudio()
-    {
-        if (Input.GetKeyUp(KeyCode.Space) || state != State.Alive)
-        {
-            audioSource.Stop();
-        }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            audioSource.Play();
+            audioSource.PlayOneShot(thrustSFX);
+        }
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            audioSource.Stop();
         }
     }
 
     // Rotate rocket
-    private void Rotate()
+    private void RotateRocket()
     {
         float rotationSpeed = (rcsThrust * Time.deltaTime);
         rigidBody.freezeRotation = true;
@@ -94,6 +88,15 @@ public class Rocket : MonoBehaviour
         rigidBody.freezeRotation = false;
     }
 
+    // Crash rocket
+    private void CrashRocket()
+    {
+        state = State.Dead;
+        Invoke("LoadStartLevel", 2f);
+        audioSource.Stop();
+        audioSource.PlayOneShot(crashSFX);
+    }
+    
     // Load Level 1
     private void LoadStartLevel()
     {
@@ -104,5 +107,14 @@ public class Rocket : MonoBehaviour
     private void LoadNextLevel()
     {
         SceneManager.LoadScene(1);
+    }
+
+    // Complete level
+    private void LevelUp()
+    {
+        state = State.Transcend;
+        Invoke("LoadNextLevel", 2f);
+        audioSource.Stop();
+        audioSource.PlayOneShot(levelUp);
     }
 }
