@@ -75,10 +75,12 @@ public class Rocket : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             audioSource.PlayOneShot(thrustSFX);
+            thrustVFX.Play();
         }
         if (Input.GetKeyUp(KeyCode.Space))
         {
             audioSource.Stop();
+            thrustVFX.Stop();
         }
     }
 
@@ -105,6 +107,7 @@ public class Rocket : MonoBehaviour
         Invoke("LoadStartLevel", 2f);
         audioSource.Stop();
         audioSource.PlayOneShot(crashSFX);
+        crashVFX.Play();
     }
     
     // Load Level 1
@@ -126,5 +129,6 @@ public class Rocket : MonoBehaviour
         Invoke("LoadNextLevel", 2f);
         audioSource.Stop();
         audioSource.PlayOneShot(levelUp);
+        levelUpVFX.Play();
     }
 }

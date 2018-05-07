@@ -374,9 +374,17 @@ Prefab:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
-    - target: {fileID: 1791298665220822, guid: 8ff6246ee1fea8241a2ac55dab4b4c61, type: 2}
-      propertyPath: m_TagString
-      value: Untagged
+    - target: {fileID: 4134510631987068, guid: 8ff6246ee1fea8241a2ac55dab4b4c61, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4134510631987068, guid: 8ff6246ee1fea8241a2ac55dab4b4c61, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4134510631987068, guid: 8ff6246ee1fea8241a2ac55dab4b4c61, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8ff6246ee1fea8241a2ac55dab4b4c61, type: 2}
