@@ -6,9 +6,19 @@ public class Rocket : MonoBehaviour
     // Variables
     [SerializeField] float rcsThrust = 150f;
     [SerializeField] float mainThrust = 100f;
+
+    // Audio Variables
     [SerializeField] AudioClip thrustSFX;
     [SerializeField] AudioClip crashSFX;
     [SerializeField] AudioClip levelUp;
+
+    // Particle Variables
+        // todo: USE THESE!!
+    [SerializeField] ParticleSystem thrustVFX;
+    [SerializeField] ParticleSystem crashVFX;
+    [SerializeField] ParticleSystem levelUpVFX;
+
+    // Game States
     enum State { Alive, Dead, Transcend };
     State state = State.Alive;
     
