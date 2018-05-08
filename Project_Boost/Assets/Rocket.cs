@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class Rocket : MonoBehaviour
 {
-    // Variables
+    // Misc Variables
     [SerializeField] float rcsThrust = 150f;
     [SerializeField] float mainThrust = 100f;
 
@@ -13,7 +13,6 @@ public class Rocket : MonoBehaviour
     [SerializeField] AudioClip levelUp;
 
     // Particle Variables
-        // todo: USE THESE!!
     [SerializeField] ParticleSystem thrustVFX;
     [SerializeField] ParticleSystem crashVFX;
     [SerializeField] ParticleSystem levelUpVFX;
@@ -40,6 +39,10 @@ public class Rocket : MonoBehaviour
         {
             ThrustRocket();
             RotateRocket();
+        }
+        else
+        {
+            thrustVFX.Stop();
         }
     }
 
