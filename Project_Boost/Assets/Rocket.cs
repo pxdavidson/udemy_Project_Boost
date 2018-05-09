@@ -73,7 +73,7 @@ public class Rocket : MonoBehaviour
         float thrustSpeed = (mainThrust);
         if (Input.GetKey(KeyCode.Space))
         {
-            rigidBody.AddRelativeForce(Vector3.up * thrustSpeed);
+            rigidBody.AddRelativeForce(Vector3.up * thrustSpeed * Time.deltaTime);
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {

@@ -773,7 +773,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rcsThrust: 150
-  mainThrust: 100
+  mainThrust: 6500
   thrustSFX: {fileID: 8300000, guid: b0a969c334072ed4ba9d3b0b035e78a0, type: 3}
   crashSFX: {fileID: 8300000, guid: b4792590cbf908542a0e5be4840b72f7, type: 3}
   levelUp: {fileID: 8300000, guid: 7e29ab315f473164e874b77362fc67f1, type: 3}
