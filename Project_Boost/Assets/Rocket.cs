@@ -41,10 +41,6 @@ public class Rocket : MonoBehaviour
             ThrustRocket();
             RotateRocket();
         }
-        else
-        {
-            thrustVFX.Stop();
-        }
     }
 
     // Detect collision
@@ -111,6 +107,7 @@ public class Rocket : MonoBehaviour
         Invoke("LoadStartLevel", levelLoad);
         audioSource.Stop();
         audioSource.PlayOneShot(crashSFX);
+        thrustVFX.Play();
         crashVFX.Play();
     }
     
