@@ -6,6 +6,7 @@ public class Rocket : MonoBehaviour
     // Misc Variables
     [SerializeField] float rcsThrust = 150f;
     [SerializeField] float mainThrust = 100f;
+    [SerializeField] float levelLoad = 2f;
 
     // Audio Variables
     [SerializeField] AudioClip thrustSFX;
@@ -107,7 +108,7 @@ public class Rocket : MonoBehaviour
     private void CrashRocket()
     {
         state = State.Dead;
-        Invoke("LoadStartLevel", 2f);
+        Invoke("LoadStartLevel", levelLoad);
         audioSource.Stop();
         audioSource.PlayOneShot(crashSFX);
         crashVFX.Play();
@@ -129,7 +130,7 @@ public class Rocket : MonoBehaviour
     private void LevelUp()
     {
         state = State.Transcend;
-        Invoke("LoadNextLevel", 2f);
+        Invoke("LoadNextLevel", levelLoad);
         audioSource.Stop();
         audioSource.PlayOneShot(levelUp);
         levelUpVFX.Play();

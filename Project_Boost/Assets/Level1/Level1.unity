@@ -330,17 +330,8 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114628613721092378, guid: d34c83354d920e04aa8715d8ddb78614,
         type: 2}
-      propertyPath: objMovFactor
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114628613721092378, guid: d34c83354d920e04aa8715d8ddb78614,
-        type: 2}
-      propertyPath: objMovVector.y
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 4873807334646512, guid: d34c83354d920e04aa8715d8ddb78614, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 3.85
+      propertyPath: period
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d34c83354d920e04aa8715d8ddb78614, type: 2}
@@ -383,11 +374,6 @@ Prefab:
     - target: {fileID: 4796973799220768, guid: 3644223f222227e44aaa9f8c79926089, type: 2}
       propertyPath: m_RootOrder
       value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114888218932355614, guid: 3644223f222227e44aaa9f8c79926089,
-        type: 2}
-      propertyPath: mainThrust
-      value: 9000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3644223f222227e44aaa9f8c79926089, type: 2}
