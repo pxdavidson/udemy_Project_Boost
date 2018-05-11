@@ -6,9 +6,11 @@ public class Rocket : MonoBehaviour
     // Misc Variables
     [SerializeField] float rcsThrust = 150f;
     [SerializeField] float mainThrust = 100f;
-    [SerializeField] float levelLoad = 2f;
+    float levelLoad = 2f;
+    int sceneLevel;
+    bool debug;
 
-    // Audio Variables
+    // Audio Variable
     [SerializeField] AudioClip thrustSFX;
     [SerializeField] AudioClip crashSFX;
     [SerializeField] AudioClip levelUp;
@@ -19,7 +21,7 @@ public class Rocket : MonoBehaviour
     [SerializeField] ParticleSystem levelUpVFX;
 
     // Game States
-    enum State { Alive, Dead, Transcend };
+    enum State { Alive, Dead, Transcend,};
     State state = State.Alive;
     
     // Components
@@ -31,6 +33,7 @@ public class Rocket : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
+        print("dog");
     }
 	
 	// Update is called once per frame
@@ -40,6 +43,23 @@ public class Rocket : MonoBehaviour
         {
             ThrustRocket();
             RotateRocket();
+        }
+        if (Debug.isDebugBuild)
+        {
+            DebugMode();
+        }
+    }
+
+    // Puts game into debug mode
+    private void DebugMode()
+    {
+        if (Input.GetKeyDown(KeyCode.N) && debug == true)
+        {
+            LoadNextLevel();
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            debug = !debug;
         }
     }
 
@@ -103,33 +123,41 @@ public class Rocket : MonoBehaviour
     // Crash rocket
     private void CrashRocket()
     {
+        if (debug == true)
+        {
+            return;
+        }
         state = State.Dead;
         Invoke("LoadStartLevel", levelLoad);
         audioSource.Stop();
         audioSource.PlayOneShot(crashSFX);
         thrustVFX.Play();
         crashVFX.Play();
+
     }
     
     // Load Level 1
     private void LoadStartLevel()
     {
-        SceneManager.LoadScene(0);
-    }
-
-    // Load Level 2
-    private void LoadNextLevel()
-    {
-        SceneManager.LoadScene(1);
+        sceneLevel = 0;
+        SceneManager.LoadScene(sceneLevel);
     }
 
     // Complete level
-    private void LevelUp()
+    void LevelUp()
     {
         state = State.Transcend;
+        sceneLevel = (sceneLevel+1);
         Invoke("LoadNextLevel", levelLoad);
         audioSource.Stop();
         audioSource.PlayOneShot(levelUp);
         levelUpVFX.Play();
+    }
+
+    // Load next level
+    void LoadNextLevel()
+    {
+        SceneManager.LoadScene(sceneLevel);
+        print(sceneLevel);
     }
 }
