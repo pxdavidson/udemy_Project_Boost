@@ -4,10 +4,9 @@ using UnityEngine.SceneManagement;
 public class Rocket : MonoBehaviour
 {
     // Misc Variables
-    [SerializeField] float rcsThrust = 150f;
-    [SerializeField] float mainThrust = 100f;
+    [SerializeField] float rcsThrust = 300f;
+    [SerializeField] float mainThrust = 10000f;
     float levelLoad = 2f;
-    int sceneLevel;
     bool debug;
 
     // Audio Variable
@@ -33,7 +32,7 @@ public class Rocket : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
-        print("dog");
+        print("llama"); // todo remove this
     }
 	
 	// Update is called once per frame
@@ -73,7 +72,7 @@ public class Rocket : MonoBehaviour
         switch (collision.gameObject.tag)
         {
             case ("Respawn"):
-                //
+                // Makes the start pad safe
                 break;
             case ("Finish"):
                 LevelUp();
@@ -87,7 +86,7 @@ public class Rocket : MonoBehaviour
     // Thrust the rocket
     private void ThrustRocket()
     {
-        float thrustSpeed = (mainThrust);
+        float thrustSpeed = (mainThrust); // todo Do I need this? Could I just use mainThrust direct?
         if (Input.GetKey(KeyCode.Space))
         {
             rigidBody.AddRelativeForce(Vector3.up * thrustSpeed * Time.deltaTime);
@@ -117,7 +116,7 @@ public class Rocket : MonoBehaviour
         {
             transform.Rotate(-Vector3.forward * rotationSpeed);
         }
-        rigidBody.freezeRotation = false;
+        rigidBody.freezeRotation = false; // todo What does this actually do?
     }
 
     // Crash rocket
@@ -139,15 +138,13 @@ public class Rocket : MonoBehaviour
     // Load Level 1
     private void LoadStartLevel()
     {
-        sceneLevel = 0;
-        SceneManager.LoadScene(sceneLevel);
+        SceneManager.LoadScene(0);
     }
 
     // Complete level
     void LevelUp()
     {
         state = State.Transcend;
-        sceneLevel = (sceneLevel+1);
         Invoke("LoadNextLevel", levelLoad);
         audioSource.Stop();
         audioSource.PlayOneShot(levelUp);
@@ -157,7 +154,15 @@ public class Rocket : MonoBehaviour
     // Load next level
     void LoadNextLevel()
     {
-        SceneManager.LoadScene(sceneLevel);
-        print(sceneLevel);
+        int currentScene = SceneManager.GetActiveScene().buildIndex;
+        int nextScene = (currentScene + 1);
+        if (nextScene == SceneManager.sceneCountInBuildSettings)
+        {
+            LoadStartLevel();
+        }
+        else
+        {
+            SceneManager.LoadScene(nextScene);
+        }
     }
 }
