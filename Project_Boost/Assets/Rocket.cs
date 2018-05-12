@@ -7,7 +7,6 @@ public class Rocket : MonoBehaviour
     [SerializeField] float rcsThrust = 300f;
     [SerializeField] float mainThrust = 10000f;
     float levelLoad = 2f;
-    bool debug;
 
     // Audio Variable
     [SerializeField] AudioClip thrustSFX;
@@ -20,9 +19,9 @@ public class Rocket : MonoBehaviour
     [SerializeField] ParticleSystem levelUpVFX;
 
     // Game States
-    enum State { Alive, Dead, Transcend,};
-    State state = State.Alive;
-    
+    bool alive = true;
+    bool debug = false;
+
     // Components
     Rigidbody rigidBody;
     AudioSource audioSource;
@@ -32,13 +31,12 @@ public class Rocket : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
-        print("llama"); // todo remove this
     }
 	
 	// Update is called once per frame
 	void Update()
     {
-        if (state == State.Alive)
+        if (alive == true)
         {
             ThrustRocket();
             RotateRocket();
@@ -65,7 +63,7 @@ public class Rocket : MonoBehaviour
     // Detect collision
     void OnCollisionEnter(Collision collision)
     {
-        if (state != State.Alive)
+        if (alive != true)
         {
             return;
         }
@@ -86,10 +84,10 @@ public class Rocket : MonoBehaviour
     // Thrust the rocket
     private void ThrustRocket()
     {
-        float thrustSpeed = (mainThrust); // todo Do I need this? Could I just use mainThrust direct?
+        float thrustSpeed = (mainThrust * Time.deltaTime);
         if (Input.GetKey(KeyCode.Space))
         {
-            rigidBody.AddRelativeForce(Vector3.up * thrustSpeed * Time.deltaTime);
+            rigidBody.AddRelativeForce(Vector3.up * thrustSpeed);
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -107,16 +105,15 @@ public class Rocket : MonoBehaviour
     private void RotateRocket()
     {
         float rotationSpeed = (rcsThrust * Time.deltaTime);
-        rigidBody.freezeRotation = true;
-        if (Input.GetKey("a"))
+        rigidBody.angularVelocity = Vector3.zero;
+        if (Input.GetKey(KeyCode.A))
         {
             transform.Rotate(Vector3.forward * rotationSpeed);
         }
-        else if (Input.GetKey("d"))
+        else if (Input.GetKey(KeyCode.D))
         {
             transform.Rotate(-Vector3.forward * rotationSpeed);
         }
-        rigidBody.freezeRotation = false; // todo What does this actually do?
     }
 
     // Crash rocket
@@ -126,7 +123,7 @@ public class Rocket : MonoBehaviour
         {
             return;
         }
-        state = State.Dead;
+        alive = !alive;
         Invoke("LoadStartLevel", levelLoad);
         audioSource.Stop();
         audioSource.PlayOneShot(crashSFX);
@@ -144,7 +141,7 @@ public class Rocket : MonoBehaviour
     // Complete level
     void LevelUp()
     {
-        state = State.Transcend;
+        rigidBody.angularVelocity = Vector3.zero;
         Invoke("LoadNextLevel", levelLoad);
         audioSource.Stop();
         audioSource.PlayOneShot(levelUp);
