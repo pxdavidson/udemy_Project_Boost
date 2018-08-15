@@ -6,7 +6,7 @@ public class Rocket : MonoBehaviour
     // Misc Variables
     [SerializeField] float rcsThrust = 300f;
     [SerializeField] float mainThrust = 10000f;
-    float levelLoad = 2f;
+    float levelLoadDelay = 2f;
 
     // Audio Variable
     [SerializeField] AudioClip thrustSFX;
@@ -124,7 +124,7 @@ public class Rocket : MonoBehaviour
             return;
         }
         alive = !alive;
-        Invoke("LoadStartLevel", levelLoad);
+        Invoke("LoadStartLevel", levelLoadDelay);
         audioSource.Stop();
         audioSource.PlayOneShot(crashSFX);
         thrustVFX.Play();
@@ -142,7 +142,7 @@ public class Rocket : MonoBehaviour
     void LevelUp()
     {
         rigidBody.angularVelocity = Vector3.zero;
-        Invoke("LoadNextLevel", levelLoad);
+        Invoke("LoadNextLevel", levelLoadDelay);
         audioSource.Stop();
         audioSource.PlayOneShot(levelUp);
         levelUpVFX.Play();
